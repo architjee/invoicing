@@ -70,19 +70,18 @@ export default {
       this.invoiceObject.bigTotal = Number(tempBigTotal.toFixed(0));
       this.invoiceObject.inWords = this.num2Text(this.invoiceObject.bigTotal);
       return this.invoiceObject.bigTotal;
+    },
+    dueAmountCalculation(){
+      let dueAmount = 0;
+      dueAmount = this.invoiceObject.bigTotal - this.invoiceObject.cashPaid.amount - this.invoiceObject.chequeAmount.amount - this.invoiceObject.onlineTransaction.amount - this.invoiceObject.otherPaymentsObject.amount
+      this.invoiceObject.dueAmount = dueAmount;
+      return this.invoiceObject.dueAmount;
     }
 
 
 
   },
   methods: {
-    complexComputation() {
-      this.smallTotal = this.smallTotalProp;
-      this.sgstTax = this.sgstTaxCalculation;
-      this.cgstTax = this.cgstTaxCalculation;
-      this.bigTotal = this.bigTotalCalculation;
-    },
-
     num2Text(num) {
 
       let a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
@@ -105,15 +104,8 @@ export default {
 </script>
 
 <template>
-  <div class="columns is-vcentered">
-    <div class="column is-2 banner has-background-danger has-text-right">
-      <div class="content has-text-white mt-6 px-3 title is-1">
-        i-Manas
-      </div>
-      <div class="subtitle is-3 has-text-white">
-        Made with ♥ by AJ
-      </div>
-    </div>
+  
+    
     <div class="column pink is-10 has-text-centered mainForm">
 
       <div class="columns">
@@ -390,6 +382,81 @@ export default {
         Total(in words) : {{ this.invoiceObject.inWords }}
       </div>
 
+  <table class="table is-fullwidth is-striped is-bordered is-hoverable is-narrow">
+        <tr>
+          <th>
+            Mode of Transaction
+          </th>
+          <th colspan="3">
+            Remarks
+          </th>
+          <th>
+            Amount
+          </th>
+        </tr>
+        <tr>
+          <td>
+            Cash Paid
+          </td>
+          <td colspan="3">
+            <input class="input is-small" type="text" placeholder="Cash Paid Remarks"
+              v-model="invoiceObject.cashPaid.remarks">
+          </td>
+          <td>
+            <input class="input is-small" type="number" placeholder="Amount Paid via Cash"
+              v-model.number="invoiceObject.cashPaid.amount">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Cheque Paid
+          </td>
+          <td colspan="3">
+            <input class="input is-small" type="text" placeholder="Cheque Paid Remarks"
+              v-model="invoiceObject.chequeAmount.remarks">
+          </td>
+          <td>
+            <input class="input is-small" type="number" placeholder="Making Charges Amount"
+              v-model.number="invoiceObject.chequeAmount.amount">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Online Transaction
+          </td>
+          <td colspan="3">
+            <input class="input is-small" type="text" placeholder="Online Transaction Remarks"
+              v-model="invoiceObject.onlineTransaction.remarks">
+          </td>
+          <td>
+            <input class="input is-small" type="number" placeholder="Online Amount"
+              v-model.number="invoiceObject.onlineTransaction.amount">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Others
+          </td>
+          <td colspan="3">
+            <input class="input is-small" type="text" placeholder="Other Transaction Remarks"
+              v-model="invoiceObject.otherPaymentsObject.remarks">
+          </td>
+          <td>
+            <input class="input is-small" type="number" placeholder="Other Transaction Amount"
+              v-model.number="invoiceObject.otherPaymentsObject.amount">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total
+          </td>
+          <td colspan="3">
+          </td>
+          <td>
+            {{ dueAmountCalculation }}
+          </td>
+        </tr>
+      </table>
 
       <div class="field is-grouped">
         <div class="control">
@@ -401,18 +468,12 @@ export default {
       </div>
 
     </div>
-  </div>
+ 
 </template>
 
-<style>
-/* div{
-  border: 1px solid black;
-} */
+<style scoped>
+
 .banner {
   height: 100vh;
 }
-
-/* .pink {
-   border: 1px solid red; 
-} */
 </style>
