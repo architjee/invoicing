@@ -16,17 +16,17 @@
       </div>
       <aside class="menu">
         <p class="menu-label">
-          General
+          General 🏆
         </p>
         <ul class="menu-list">
           <li>
-            <router-link to="/main">Main</router-link>
+            <router-link to="/main">Main 🎫</router-link>
           </li>
           <li>
-            <router-link to="/admin">Admin</router-link>
+            <router-link to="/auth">Admin ⚙️</router-link>
           </li>
           <li>
-            <router-link to="/about">about</router-link>
+            <router-link to="/about">About ⚠️</router-link>
           </li>
         </ul>
 
